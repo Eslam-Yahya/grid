@@ -128,10 +128,13 @@ export interface UseSelectionOptions {
    * When selection is moved
    */
   onSelectionMove?: (from: SelectionArea, to: SelectionArea) => void;
+<<<<<<< HEAD
   /**
    * Direction for RTL support
    */
   direction?: "ltr" | "rtl";
+=======
+>>>>>>> master
 }
 
 export type NewSelectionMode = "clear" | "modify" | "append";
@@ -257,7 +260,10 @@ const useSelection = ({
   canSelectionSpanMergedCells = defaultSelectionSpan,
   getValue,
   onSelectionMove,
+<<<<<<< HEAD
   direction = "ltr",
+=======
+>>>>>>> master
 }: UseSelectionOptions): SelectionResults => {
   const [activeCell, setActiveCell] = useState<CellInterface | null>(
     initialActiveCell
@@ -791,11 +797,19 @@ const useSelection = ({
       const scrollToCell = modify
         ? selectionEnd.current.rowIndex === coords.rowIndex
           ? // Scroll to a column
+<<<<<<< HEAD
           { columnIndex: coords.columnIndex }
           : // Scroll to row
           { rowIndex: coords.rowIndex }
         : // Scroll to cell
         { rowIndex, columnIndex };
+=======
+            { columnIndex: coords.columnIndex }
+          : // Scroll to row
+            { rowIndex: coords.rowIndex }
+        : // Scroll to cell
+          { rowIndex, columnIndex };
+>>>>>>> master
 
       const isUserNavigatingToActiveCell = isEqualCells(
         firstActiveCell.current,
@@ -991,12 +1005,20 @@ const useSelection = ({
       const isMetaKey = e.nativeEvent.ctrlKey || e.nativeEvent.metaKey;
       switch (e.nativeEvent.which) {
         case KeyCodes.Right:
+<<<<<<< HEAD
           keyNavigate(direction === "rtl" ? Direction.Left : Direction.Right, isShiftKey, isMetaKey);
+=======
+          keyNavigate(Direction.Right, isShiftKey, isMetaKey);
+>>>>>>> master
           e.preventDefault();
           break;
 
         case KeyCodes.Left:
+<<<<<<< HEAD
           keyNavigate(direction === "rtl" ? Direction.Right : Direction.Left, isShiftKey, isMetaKey);
+=======
+          keyNavigate(Direction.Left, isShiftKey, isMetaKey);
+>>>>>>> master
           e.preventDefault();
           break;
 
@@ -1140,10 +1162,17 @@ const useSelection = ({
       bounds.top < activeCellBounds.top
         ? Direction.Up
         : bounds.bottom > activeCellBounds.bottom
+<<<<<<< HEAD
           ? Direction.Down
           : bounds.right > activeCellBounds.right
             ? Direction.Right
             : Direction.Left;
+=======
+        ? Direction.Down
+        : bounds.right > activeCellBounds.right
+        ? Direction.Right
+        : Direction.Left;
+>>>>>>> master
 
     if (direction === Direction.Right) {
       bounds = {
