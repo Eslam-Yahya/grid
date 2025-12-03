@@ -128,6 +128,10 @@ export interface UseSelectionOptions {
    * When selection is moved
    */
   onSelectionMove?: (from: SelectionArea, to: SelectionArea) => void;
+  /**
+   * Direction for RTL support
+   */
+  direction?: "ltr" | "rtl";
 }
 
 export type NewSelectionMode = "clear" | "modify" | "append";
@@ -253,6 +257,7 @@ const useSelection = ({
   canSelectionSpanMergedCells = defaultSelectionSpan,
   getValue,
   onSelectionMove,
+  direction = "ltr",
 }: UseSelectionOptions): SelectionResults => {
   const [activeCell, setActiveCell] = useState<CellInterface | null>(
     initialActiveCell
@@ -786,11 +791,11 @@ const useSelection = ({
       const scrollToCell = modify
         ? selectionEnd.current.rowIndex === coords.rowIndex
           ? // Scroll to a column
-            { columnIndex: coords.columnIndex }
+          { columnIndex: coords.columnIndex }
           : // Scroll to row
-            { rowIndex: coords.rowIndex }
+          { rowIndex: coords.rowIndex }
         : // Scroll to cell
-          { rowIndex, columnIndex };
+        { rowIndex, columnIndex };
 
       const isUserNavigatingToActiveCell = isEqualCells(
         firstActiveCell.current,
@@ -986,12 +991,12 @@ const useSelection = ({
       const isMetaKey = e.nativeEvent.ctrlKey || e.nativeEvent.metaKey;
       switch (e.nativeEvent.which) {
         case KeyCodes.Right:
-          keyNavigate(Direction.Right, isShiftKey, isMetaKey);
+          keyNavigate(direction === "rtl" ? Direction.Left : Direction.Right, isShiftKey, isMetaKey);
           e.preventDefault();
           break;
 
         case KeyCodes.Left:
-          keyNavigate(Direction.Left, isShiftKey, isMetaKey);
+          keyNavigate(direction === "rtl" ? Direction.Right : Direction.Left, isShiftKey, isMetaKey);
           e.preventDefault();
           break;
 
@@ -1135,10 +1140,10 @@ const useSelection = ({
       bounds.top < activeCellBounds.top
         ? Direction.Up
         : bounds.bottom > activeCellBounds.bottom
-        ? Direction.Down
-        : bounds.right > activeCellBounds.right
-        ? Direction.Right
-        : Direction.Left;
+          ? Direction.Down
+          : bounds.right > activeCellBounds.right
+            ? Direction.Right
+            : Direction.Left;
 
     if (direction === Direction.Right) {
       bounds = {
