@@ -3,6 +3,7 @@
 dist
 node_modules
 *.log
+/.idea
 storybook-static
 .parcel-cache
 *.bk
